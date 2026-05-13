@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>RFID Student Dashboard</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',sans-serif;
+        }
+
+        body{
+            background:#f4f7fa;
+            padding:30px;
+        }
+
+        .container{
+            max-width:1200px;
+            margin:auto;
+        }
+
+        .card{
+            background:white;
+            border-radius:16px;
+            padding:25px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:30px;
+            color:#2c3e50;
+        }
+
+        /* =======================
+           FORM
+        ======================= */
+
+        .form-box{
+            background:#eef4ff;
+            padding:20px;
+            border-radius:12px;
+            margin-bottom:30px;
+        }
+
+        .form-box h3{
+            margin-bottom:15px;
+            color:#34495e;
+        }
+
+        form{
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+        }
+
+        input{
+            flex:1;
+            min-width:200px;
+            padding:12px;
+            border:1px solid #ddd;
+            border-radius:8px;
+            outline:none;
+        }
+
+        button{
+            padding:12px 20px;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .btn-add{
+            background:#27ae60;
+            color:white;
+        }
+
+        .btn-add:hover{
+            background:#219150;
+        }
+
+        /* =======================
+           TABLE
+        ======================= */
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            overflow:hidden;
+            border-radius:12px;
+        }
+
+        th{
+            background:#3498db;
+            color:white;
+            padding:15px;
+            text-align:left;
+        }
+
+        td{
+            padding:15px;
+            border-bottom:1px solid #eee;
+        }
+
+        tr:hover{
+            background:#fafafa;
+        }
+
+        code{
+            background:#f2f2f2;
+            padding:5px 8px;
+            border-radius:6px;
+        }
+
+        /* =======================
+           STATUS
+        ======================= */
+
+        .badge{
+            padding:6px 12px;
+            border-radius:30px;
+            font-size:0.8rem;
+            font-weight:bold;
+        }
+
+        .active{
+            background:#d4edda;
+            color:#155724;
+        }
+
+        .expired{
+            background:#f8d7da;
+            color:#721c24;
+        }
+
+        /* =======================
+           BUTTONS
+        ======================= */
+
+        .actions{
+            display:flex;
+            gap:10px;
+        }
+
+        .btn-renew{
+            background:#3498db;
+            color:white;
+            text-decoration:none;
+            padding:8px 14px;
+            border-radius:6px;
+            font-size:0.85rem;
+        }
+
+        .btn-renew:hover{
+            background:#2980b9;
+        }
+
+        .btn-delete{
+            background:#e74c3c;
+            color:white;
+            text-decoration:none;
+            padding:8px 14px;
+            border-radius:6px;
+            font-size:0.85rem;
+        }
+
+        .btn-delete:hover{
+            background:#c0392b;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>RFID Student Dashboard</h1>
+
+        <!-- =======================
+             ADD STUDENT
+        ======================= -->
+
+        <div class="form-box">
+
+            <h3>Enroll New Student</h3>
+
+            <form action="/add" method="POST">
+
+                <input
+                    type="text"
+                    name="uid"
+                    placeholder="RFID Card UID"
+                    required
+                >
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Student Name"
+                    required
+                >
+
+                <input
+                    type="number"
+                    name="sessions"
+                    placeholder="Sessions / Plan"
+                    required
+                >
+
+                <button type="submit"
+                        class="btn-add">
+
+                    Add Student
+
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- =======================
+             TABLE
+        ======================= -->
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Card UID</th>
+                <th>Name</th>
+                <th>Sessions Left</th>
+                <th>Plan</th>
+                <th>Last Scan</th>
+                <th>Status</th>
+                <th>Actions</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for student in students %}
+
+            <tr>
+
+                <td>
+                    <code>{{ student.uid }}</code>
+                </td>
+
+                <td>
+                    <strong>{{ student.name }}</strong>
+                </td>
+
+                <td>
+                    {{ student.sessions }}
+                </td>
+
+                <td>
+                    {{ student.plan }}
+                </td>
+
+                <td>
+                    {{ student.lastScan }}
+                </td>
+
+                <td>
+
+                    {% if student.sessions > 0 %}
+
+                    <span class="badge active">
+                        ACTIVE
+                    </span>
+
+                    {% else %}
+
+                    <span class="badge expired">
+                        EXPIRED
+                    </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <div class="actions">
+
+                        <a href="/renew/{{ student.uid }}"
+                           class="btn-renew">
+
+                            RENEW
+
+                        </a>
+
+                        <a href="/delete/{{ student.uid }}"
+                           class="btn-delete"
+
+                           onclick="return confirm('Delete this student?')">
+
+                            DELETE
+
+                        </a>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
