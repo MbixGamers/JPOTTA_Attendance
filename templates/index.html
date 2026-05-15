@@ -2,184 +2,163 @@
 <html lang="en">
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>RFID Student Dashboard</title>
+<title>RFID Dashboard</title>
 
-    <style>
+<style>
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Segoe UI',sans-serif;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
 
-        body{
-            background:#f4f7fa;
-            padding:30px;
-        }
+body{
+    background:#f4f7fa;
+    padding:30px;
+}
 
-        .container{
-            max-width:1200px;
-            margin:auto;
-        }
+.container{
+    max-width:1200px;
+    margin:auto;
+}
 
-        .card{
-            background:white;
-            border-radius:16px;
-            padding:25px;
-            box-shadow:0 5px 20px rgba(0,0,0,0.08);
-        }
+.card{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
 
-        h1{
-            text-align:center;
-            margin-bottom:30px;
-            color:#2c3e50;
-        }
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
 
-        /* =======================
-           FORM
-        ======================= */
+h1{
+    color:#2c3e50;
+}
 
-        .form-box{
-            background:#eef4ff;
-            padding:20px;
-            border-radius:12px;
-            margin-bottom:30px;
-        }
+.attendance-btn{
+    background:#8e44ad;
+    color:white;
+    text-decoration:none;
+    padding:12px 18px;
+    border-radius:10px;
+    font-weight:bold;
+}
 
-        .form-box h3{
-            margin-bottom:15px;
-            color:#34495e;
-        }
+.attendance-btn:hover{
+    background:#732d91;
+}
 
-        form{
-            display:flex;
-            flex-wrap:wrap;
-            gap:10px;
-        }
+.form-box{
+    background:#eef4ff;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:30px;
+}
 
-        input{
-            flex:1;
-            min-width:200px;
-            padding:12px;
-            border:1px solid #ddd;
-            border-radius:8px;
-            outline:none;
-        }
+.form-box h3{
+    margin-bottom:15px;
+}
 
-        button{
-            padding:12px 20px;
-            border:none;
-            border-radius:8px;
-            cursor:pointer;
-            font-weight:bold;
-            transition:0.3s;
-        }
+form{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
 
-        .btn-add{
-            background:#27ae60;
-            color:white;
-        }
+input{
+    flex:1;
+    min-width:200px;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
 
-        .btn-add:hover{
-            background:#219150;
-        }
+button{
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
 
-        /* =======================
-           TABLE
-        ======================= */
+.btn-add{
+    background:#27ae60;
+    color:white;
+}
 
-        table{
-            width:100%;
-            border-collapse:collapse;
-            overflow:hidden;
-            border-radius:12px;
-        }
+table{
+    width:100%;
+    border-collapse:collapse;
+}
 
-        th{
-            background:#3498db;
-            color:white;
-            padding:15px;
-            text-align:left;
-        }
+th{
+    background:#3498db;
+    color:white;
+    padding:15px;
+    text-align:left;
+}
 
-        td{
-            padding:15px;
-            border-bottom:1px solid #eee;
-        }
+td{
+    padding:15px;
+    border-bottom:1px solid #eee;
+}
 
-        tr:hover{
-            background:#fafafa;
-        }
+.badge{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:0.8rem;
+    font-weight:bold;
+}
 
-        code{
-            background:#f2f2f2;
-            padding:5px 8px;
-            border-radius:6px;
-        }
+.active{
+    background:#d4edda;
+    color:#155724;
+}
 
-        /* =======================
-           STATUS
-        ======================= */
+.expired{
+    background:#f8d7da;
+    color:#721c24;
+}
 
-        .badge{
-            padding:6px 12px;
-            border-radius:30px;
-            font-size:0.8rem;
-            font-weight:bold;
-        }
+.actions{
+    display:flex;
+    gap:10px;
+}
 
-        .active{
-            background:#d4edda;
-            color:#155724;
-        }
+.btn-renew{
+    background:#3498db;
+    color:white;
+    text-decoration:none;
+    padding:8px 14px;
+    border-radius:6px;
+}
 
-        .expired{
-            background:#f8d7da;
-            color:#721c24;
-        }
+.btn-delete{
+    background:#e74c3c;
+    color:white;
+    text-decoration:none;
+    padding:8px 14px;
+    border-radius:6px;
+}
 
-        /* =======================
-           BUTTONS
-        ======================= */
+code{
+    background:#f2f2f2;
+    padding:5px 8px;
+    border-radius:6px;
+}
 
-        .actions{
-            display:flex;
-            gap:10px;
-        }
-
-        .btn-renew{
-            background:#3498db;
-            color:white;
-            text-decoration:none;
-            padding:8px 14px;
-            border-radius:6px;
-            font-size:0.85rem;
-        }
-
-        .btn-renew:hover{
-            background:#2980b9;
-        }
-
-        .btn-delete{
-            background:#e74c3c;
-            color:white;
-            text-decoration:none;
-            padding:8px 14px;
-            border-radius:6px;
-            font-size:0.85rem;
-        }
-
-        .btn-delete:hover{
-            background:#c0392b;
-        }
-
-    </style>
+</style>
 
 </head>
 
@@ -187,151 +166,147 @@
 
 <div class="container">
 
-    <div class="card">
+<div class="card">
 
-        <h1>RFID Student Dashboard</h1>
+<div class="topbar">
 
-        <!-- =======================
-             ADD STUDENT
-        ======================= -->
+<h1>RFID Student Dashboard</h1>
 
-        <div class="form-box">
+<a href="/attendance"
+   class="attendance-btn">
 
-            <h3>Enroll New Student</h3>
+    Attendance
 
-            <form action="/add" method="POST">
+</a>
 
-                <input
-                    type="text"
-                    name="uid"
-                    placeholder="RFID Card UID"
-                    required
-                >
+</div>
 
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Student Name"
-                    required
-                >
+<div class="form-box">
 
-                <input
-                    type="number"
-                    name="sessions"
-                    placeholder="Sessions / Plan"
-                    required
-                >
+<h3>Enroll New Student</h3>
 
-                <button type="submit"
-                        class="btn-add">
+<form action="/add" method="POST">
 
-                    Add Student
+<input type="text"
+       name="uid"
+       placeholder="RFID UID"
+       required>
 
-                </button>
+<input type="text"
+       name="name"
+       placeholder="Student Name"
+       required>
 
-            </form>
+<input type="number"
+       name="sessions"
+       placeholder="Sessions"
+       required>
 
-        </div>
+<button type="submit"
+        class="btn-add">
 
-        <!-- =======================
-             TABLE
-        ======================= -->
+Add Student
 
-        <table>
+</button>
 
-            <thead>
+</form>
 
-            <tr>
+</div>
 
-                <th>Card UID</th>
-                <th>Name</th>
-                <th>Sessions Left</th>
-                <th>Plan</th>
-                <th>Last Scan</th>
-                <th>Status</th>
-                <th>Actions</th>
+<table>
 
-            </tr>
+<thead>
 
-            </thead>
+<tr>
 
-            <tbody>
+<th>UID</th>
+<th>Name</th>
+<th>Sessions</th>
+<th>Plan</th>
+<th>Last Scan</th>
+<th>Status</th>
+<th>Actions</th>
 
-            {% for student in students %}
+</tr>
 
-            <tr>
+</thead>
 
-                <td>
-                    <code>{{ student.uid }}</code>
-                </td>
+<tbody>
 
-                <td>
-                    <strong>{{ student.name }}</strong>
-                </td>
+{% for student in students %}
 
-                <td>
-                    {{ student.sessions }}
-                </td>
+<tr>
 
-                <td>
-                    {{ student.plan }}
-                </td>
+<td>
+<code>{{ student.uid }}</code>
+</td>
 
-                <td>
-                    {{ student.lastScan }}
-                </td>
+<td>
+<strong>{{ student.name }}</strong>
+</td>
 
-                <td>
+<td>
+{{ student.sessions }}
+</td>
 
-                    {% if student.sessions > 0 %}
+<td>
+{{ student.plan }}
+</td>
 
-                    <span class="badge active">
-                        ACTIVE
-                    </span>
+<td>
+{{ student.lastScan }}
+</td>
 
-                    {% else %}
+<td>
 
-                    <span class="badge expired">
-                        EXPIRED
-                    </span>
+{% if student.sessions > 0 %}
 
-                    {% endif %}
+<span class="badge active">
+ACTIVE
+</span>
 
-                </td>
+{% else %}
 
-                <td>
+<span class="badge expired">
+EXPIRED
+</span>
 
-                    <div class="actions">
+{% endif %}
 
-                        <a href="/renew/{{ student.uid }}"
-                           class="btn-renew">
+</td>
 
-                            RENEW
+<td>
 
-                        </a>
+<div class="actions">
 
-                        <a href="/delete/{{ student.uid }}"
-                           class="btn-delete"
+<a href="/renew/{{ student.uid }}"
+   class="btn-renew">
 
-                           onclick="return confirm('Delete this student?')">
+RENEW
 
-                            DELETE
+</a>
 
-                        </a>
+<a href="/delete/{{ student.uid }}"
+   class="btn-delete"
+   onclick="return confirm('Delete student?')">
 
-                    </div>
+DELETE
 
-                </td>
+</a>
 
-            </tr>
+</div>
 
-            {% endfor %}
+</td>
 
-            </tbody>
+</tr>
 
-        </table>
+{% endfor %}
 
-    </div>
+</tbody>
+
+</table>
+
+</div>
 
 </div>
 

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Attendance</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f4f7fa;
+    padding:30px;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+}
+
+.card{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    overflow:auto;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.back-btn{
+    background:#3498db;
+    color:white;
+    text-decoration:none;
+    padding:12px 18px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+table{
+    border-collapse:collapse;
+    min-width:1200px;
+    width:100%;
+}
+
+th{
+    background:#2c3e50;
+    color:white;
+    padding:12px;
+    text-align:center;
+}
+
+td{
+    border-bottom:1px solid #eee;
+    padding:12px;
+    text-align:center;
+}
+
+.present{
+    color:green;
+    font-weight:bold;
+    font-size:1rem;
+}
+
+.blank{
+    color:#bbb;
+}
+
+.total{
+    font-weight:bold;
+    color:#8e44ad;
+}
+
+.name{
+    text-align:left;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<div class="topbar">
+
+<h1>
+Attendance -
+{{ current_month }}
+{{ current_year }}
+</h1>
+
+<a href="/"
+   class="back-btn">
+
+Dashboard
+
+</a>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Student</th>
+
+{% for day in month_days %}
+
+<th>
+
+{{ day.split('-')[0] }}
+
+</th>
+
+{% endfor %}
+
+<th>Total</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for student in students %}
+
+<tr>
+
+<td class="name">
+{{ student.name }}
+</td>
+
+{% for day in month_days %}
+
+<td>
+
+{% if day in student.attendance %}
+
+<span class="present">
+P
+</span>
+
+{% else %}
+
+<span class="blank">
+—
+</span>
+
+{% endif %}
+
+</td>
+
+{% endfor %}
+
+<td class="total">
+
+{{ student.present_count }}
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>
